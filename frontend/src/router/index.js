@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import PageHome from '@/views/PageHome.vue'
 import PageDetail from '@/views/PageDetail.vue'
 import QuestionCreate from '@/views/QuestionCreate.vue'
-
+import MemberLoginVue from '@/views/MemberLogin.vue'
 const routes = [
   {
     path: '/',
@@ -19,6 +19,11 @@ const routes = [
     path: '/question-create',
     name: 'QuestionCreate',
     component: QuestionCreate
+  },
+  {
+    path : '/login',
+    name : 'memberLogin',
+    component : MemberLoginVue
   }
 ]
 

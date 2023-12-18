@@ -5,11 +5,12 @@ from Server.repository.PostRepository import PostRepository
 from motor.motor_asyncio import AsyncIOMotorClient
 from Server.entity.PostModel import PostModel
 
+import httpx
 from domain.answer import answer_router
 from domain.question import question_router
 
 from Server.Controller.MemberRouter import router as member_router
-
+from domain.member import member_router
 app = FastAPI()
 
 origins = [
@@ -30,6 +31,14 @@ app.add_middleware(
 # 라우터 설정
 app.include_router(question_router.router)
 app.include_router(answer_router.router)
+app.include_router(member_router.router)
+
+
+
+
+
+
+
 
 # Connect to MongoDB
 connect("myapi", host="localhost", port=27017)
