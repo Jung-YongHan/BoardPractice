@@ -18,25 +18,3 @@ class Question(Document):
     content = StringField(required=True)
     create_date = DateTimeField(required=True)
     answers = ListField(EmbeddedDocumentField(Answer))
-
-# 참조 사용
-"""
-
-class Question(Document):
-    subject = StringField(required=True)
-    content = StringField(required=True)
-    create_date = DateTimeField(required=True)
-
-class Answer(Document):
-    content = StringField(required=True)
-    create_date = DateTimeField(required=True)
-    question = ReferenceField(Question)
-
-# Create a new question
-new_question = Question(subject="Example Subject", content="Example Content", create_date="2023-01-01T12:00:00")
-new_question.save()
-
-# Create a new answer referencing the question by its ObjectId
-new_answer = Answer(content="Example Answer Content", create_date="2023-01-02T14:00:00", question=new_question)
-new_answer.save()
-"""
