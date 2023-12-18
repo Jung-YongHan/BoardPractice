@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import httpx
 from fastapi import APIRouter,HTTPException, Query
-from repository.MemberRepository import MemberRepository 
+from Server.repository.MemberRepository import MemberRepository
 router = APIRouter()
 
 repo=MemberRepository()
@@ -14,7 +14,7 @@ async def read_users(id:str,password:str):
     member = repo.search_member_by_id(id)
     return {"message": "User List"}
 
-
+"""
 @router.get("/kakao")
 async def kakao_login(code: Optional[str] = Query(None)):
     try:
@@ -32,6 +32,7 @@ async def kakao_login(code: Optional[str] = Query(None)):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+"""
 
 async def get_kakao_access_token(code: str):
     # 카카오 액세스 토큰 발급을 위한 로직을 구현합니다.

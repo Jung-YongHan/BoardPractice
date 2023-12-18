@@ -1,5 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from entity import PostModel
+from Server.entity import PostModel
 from datetime import datetime
 
 

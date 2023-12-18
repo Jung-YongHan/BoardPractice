@@ -13,6 +13,7 @@ class AnswerCreate(BaseModel):
         return v
 
 class Answer(BaseModel):
-    id: int
+
+    #author: str
     content: str
     create_date: datetime.datetime

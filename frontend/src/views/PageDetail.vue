@@ -72,8 +72,9 @@ export default {
     },
     methods: {
         getQuestion() {
-            fastapi('get', `/api/question/detail/${this.question_id}`, {}, (json) => {
-                this.question = json;
+          const index = this.$route.params.index;
+            fastapi('get', `/api/question/list/`, {}, (json) => {
+                this.question = json[index];
             });
         },
         postAnswer() {

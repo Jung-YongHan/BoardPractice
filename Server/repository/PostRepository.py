@@ -3,7 +3,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from motor.motor_asyncio import AsyncIOMotorClient
-from entity import PostModel
+from Server.entity import PostModel
 
 
 DB_URL="mongodb://localhost:27017"
