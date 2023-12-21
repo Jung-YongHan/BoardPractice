@@ -15,8 +15,12 @@ db = client.Board  #Board는 원하는 db이름
 class MemberRepository:
     #삽입
     async def save_member(self,member: member_model):
-        await db.members.insert_one(member.model_dump())
-    
+    # _id 필드를 사용자 정의 아이디로 설정
+        member_data = member.dict(by_alias=True)
+        new_member = await db.members.insert_one(member_data)
+
+        return {"status": "success", "member_id": str(new_member.inserted_id)}
+
     #삭제
     async def delete_member(self,id: int):
         await db.members.delete_one({"id":id})
@@ -33,5 +37,17 @@ class MemberRepository:
         return posts
 
     async def search_member_by_id(self,id: str):
-        return db.members.find_one({"id":id})
-        
+        return  await db.members.find_one({"id":id})
+    
+    async def member_login(self, id: str, password: str):
+        member= await self.search_member_by_id(id)
+        if member is None:
+        # 회원이 존재하지 않는 경우의 처리
+            return None
+        if  member.password==password:
+            return  member
+        else:
+            return "fail"
+
+
+    

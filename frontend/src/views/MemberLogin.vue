@@ -7,11 +7,11 @@
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe0b6d2c0026ce9c5faa311c85954a4b7b268fd085ae93a9c8d654e509345a4a?"
           class="img"
         />
-        <div class="div-4"  @submit.prevent="handleLogin">Log in</div>
-        <form id="loginForm" act>
-          <input type="text" v-model="user_id" name="user_id" class="div-5" placeholder="id">
+        <div class="div-4"  >Log in</div>
+        <form id="loginForm" @submit.prevent="handleLogin()">
+          <input type="text" v-model="id" name="id" class="div-5" placeholder="id" required>
           <br><br>
-          <input type="password" v-model="password" name="password" class="div-6" placeholder="password ">
+          <input type="password" v-model="password" name="password" class="div-5" placeholder="password " required>
           <br><br>
           <button type="submit" class="div-10">Log in</button>
       </form>
@@ -36,23 +36,40 @@
   </template>
 
 <script>
-  
+    import fastapi from "../lib/api"
+
   export default {
 
     data() {
     return {
       loginData: {
-        username: '',
+        id: '',
         password: ''
       }
     };
   },
     methods: {
+      handleLogin(){
+        let url ="/memberLogin"
+          let params={
+            id:this.id,
+            password:this.password,
+          }
+          
+          fastapi('post', url, params,
+            () => {
+              this.$router.push("/")
+            },
+            (json_error) => {
+              this.error = json_error
+            })
+          
+      },
     kakaoLogin() {
       window.Kakao.Auth.login({
         scope: "profile_image",
         success: this.getKakaoAccount,
-        redirectUri:"http://localhost:8080/auth/callback"
+        
       });
     },
     getKakaoAccount() {
@@ -66,6 +83,8 @@
           
 
           //로그인처리구현
+          //서버로 닉네임 보내서 있으면 true 없으면 false
+          //false면 회원가입 페이지로
 
           alert("로그인 성공!  "+ninkname);
         },
@@ -167,54 +186,8 @@
       margin: 0 7px;
     }
   }
-  .div-6 {
-    color: #858585;
-    white-space: nowrap;
-    border-radius: 8px;
-    border: 1px solid #a3a3a3;
-    align-self: stretch;
-    margin-top: 12px;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 60px 16px 14px;
-    font: 400 18px/150% Inter, sans-serif;
-  }
-  @media (max-width: 991px) {
-    .div-6 {
-      white-space: initial;
-      padding-right: 20px;
-      margin: 0 7px;
-    }
-  }
-  .div-7 {
-    align-self: start;
-    display: flex;
-    margin-top: 29px;
-    gap: 5px;
-  }
-  .div-8 {
-    border-radius: 4px;
-    border: 1px solid #a3a3a3;
-    background-color: #fff;
-    display: flex;
-    width: 16px;
-    height: 16px;
-    flex-direction: column;
-  }
-  .div-9 {
-    color: #5e5e5e;
-    align-self: center;
-    flex-grow: 1;
-    white-space: nowrap;
-    margin: auto 0;
-    font: 400 10px/150% Inter, sans-serif;
-  }
-  @media (max-width: 991px) {
-    .div-9 {
-      white-space: initial;
-    }
-  }
+  
+  
   .div-10 {
     color: #fff;
     white-space: nowrap;
@@ -251,43 +224,5 @@
       align-items: center;
     }
   }
-  .img-2 {
-    aspect-ratio: 170;
-    object-fit: contain;
-    object-position: center;
-    width: 170px;
-    stroke-width: 1px;
-    stroke: #a3a3a3;
-    overflow: hidden;
-    align-self: center;
-    max-width: 100%;
-    margin: auto 0;
-  }
-  .div-12 {
-    color: #a3a3a3;
-    font-feature-settings: "clig" off, "liga" off;
-    font: 400 15px/253% Roboto, sans-serif;
-  }
-  .img-3 {
-    aspect-ratio: 170;
-    object-fit: contain;
-    object-position: center;
-    width: 170px;
-    stroke-width: 1px;
-    stroke: #a3a3a3;
-    overflow: hidden;
-    align-self: center;
-    max-width: 100%;
-    margin: auto 0;
-  }
-  .img-4 {
-    aspect-ratio: 7.76;
-    object-fit: contain;
-    object-position: center;
-    width: 295px;
-    overflow: hidden;
-    align-self: center;
-    margin-top: 29px;
-    max-width: 100%;
-  }
+
   </style>

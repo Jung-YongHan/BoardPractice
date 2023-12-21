@@ -3,6 +3,8 @@ import PageHome from '@/views/PageHome.vue'
 import PageDetail from '@/views/PageDetail.vue'
 import QuestionCreate from '@/views/QuestionCreate.vue'
 import MemberLoginVue from '@/views/MemberLogin.vue'
+import memberJoinVue from '@/views/memberJoin.vue'
+import testLoginVue from '@/views/testLogin.vue'
 const routes = [
   {
     path: '/',
@@ -24,6 +26,16 @@ const routes = [
     path : '/login',
     name : 'memberLogin',
     component : MemberLoginVue
+  },
+  {
+    path:'/memberJoin',
+    name : 'memberJoin',
+    component : memberJoinVue
+  },
+  {
+    path:'/testLogin',
+    name : 'testLogin',
+    component : testLoginVue
   }
 ]
 

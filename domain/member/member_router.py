@@ -3,9 +3,9 @@ import os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from fastapi import APIRouter,HTTPException, Query
+from fastapi import APIRouter
 from member_crud import MemberRepository
-
+from member_schema import member_model,loginForm
 from starlette.responses import RedirectResponse
 
 
@@ -27,6 +27,21 @@ async def login_via_kakao():
         url=f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URI}"
     )
 
+@router.post("/memberLogin")
+async def memberLogin(login:loginForm):
+    member =  await repo.member_login(login.id,login.password)
+    if member:
+        return member
+    else:
+        return False
+
+
+@router.post("/memberJoin")
+async def memberJoin(member:member_model):
+    print("Received member data:", member)
+    await repo.save_member(member)
+
+    return 1
 
 """
 @router.get("/auth/kakao")

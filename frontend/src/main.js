@@ -7,4 +7,4 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const app = createApp(App)
 app.use(router).mount('#app')
-window.Kakao.init("5f1e26ba70e24642f4243a507d81295c");
+window.Kakao.init("51cdee165f32192ab3145096c2da3462");
