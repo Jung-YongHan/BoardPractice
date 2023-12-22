@@ -1,20 +1,25 @@
-from mongoengine import (Document, StringField, DateTimeField, ListField,
-                         EmbeddedDocument, EmbeddedDocumentField)
+from sqlalchemy import Column, Integer, TEXT, VARCHAR, TIMESTAMP, ForeignKey
+from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
-# Embed 사용 - 하나의 문서 안에 다른 문서를 중첩시켜 저장할 수 있다.
-# 내장 문서는 부모 문서에 종속되므로 부모 문서가 삭제되면 내장 문서도 함께 삭제된다.
-# 게시판 목적에 더 적합하다고 판단
+from database import Base
 
-class Answer(EmbeddedDocument):
+class Question(Base):
+    # 데이터베이스에서 사용할 테이블의 이름을 SQLAlchemy에 알려주기
+    __tablename__ = "question"
 
-    #author = StringField(required=True)
-    content = StringField(required=True)
-    create_date = DateTimeField(required=True)
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    # author = Column(VARCHAR(10), nullable=False)
+    title = Column(VARCHAR(20), nullable=False)
+    content = Column(TEXT,nullable=False)
+    create_date = Column(TIMESTAMP(timezone=True), nullable=False, server_default=func.now())
 
-class Question(Document):
+class Answer(Base):
+    __tablename__ = "answer"
 
-    #author = StringField(required=True)
-    subject = StringField(required=True)
-    content = StringField(required=True)
-    create_date = DateTimeField(required=True)
-    answers = ListField(EmbeddedDocumentField(Answer))
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    # author = Column(VARCHAR(10), nullable=False)
+    content = Column(TEXT, nullable=False)
+    create_date = Column(TIMESTAMP(timezone=True), nullable=False, server_default=func.now())
+    question_id = Column(Integer, ForeignKey("question.id"))
+    question = relationship("Question", backref="answers")

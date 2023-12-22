@@ -11,7 +11,7 @@
 <template>
     <div class="container my-3">
         <!-- 질문 -->
-        <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+        <h2 class="border-bottom py-2">{{ question.title }}</h2>
         <div class="card my-3">
             <div class="card-body">
                 <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div>
@@ -72,9 +72,8 @@ export default {
     },
     methods: {
         getQuestion() {
-          const index = this.$route.params.index;
-            fastapi('get', `/api/question/list/`, {}, (json) => {
-                this.question = json[index];
+            fastapi('get', `/api/question/detail/${this.question_id}`, {}, (json) => {
+                this.question = json;
             });
         },
         postAnswer() {

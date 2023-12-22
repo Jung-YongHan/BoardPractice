@@ -4,8 +4,8 @@
       <ErrorComponent :error="error" />
       <form @submit.prevent="postQuestion">
         <div class="mb-3">
-          <label for="subject" class="form-label">제목</label>
-          <input type="text" class="form-control" id="subject" v-model="subject" required>
+          <label for="title" class="form-label">제목</label>
+          <input type="text" class="form-control" id="title" v-model="title" required>
         </div>
         <div class="mb-3">
           <label for="content" class="form-label">내용</label>
@@ -27,7 +27,7 @@
       data() {
         return {
           error: { detail: [] },
-          subject: "",
+          title: "",
           content: "",
         };
       },
@@ -35,7 +35,7 @@
         postQuestion() {
           let url = "/api/question/create"
           let params = {
-            subject: this.subject,
+            title: this.title,
             content: this.content,
           }
           fastapi('post', url, params,

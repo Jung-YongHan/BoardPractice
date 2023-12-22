@@ -2,7 +2,7 @@ import datetime
 
 from pydantic import BaseModel, field_validator
 
-
+# 답변 등록 시 전달되는 파라미터 설정
 class AnswerCreate(BaseModel):
     content: str
 
@@ -13,7 +13,6 @@ class AnswerCreate(BaseModel):
         return v
 
 class Answer(BaseModel):
-
-    #author: str
+    id: int
     content: str
     create_date: datetime.datetime

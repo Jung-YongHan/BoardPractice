@@ -9,10 +9,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(question, index) in questionList" :key="stringifyId(question.id)">
-          <td>{{ index }}</td>
+        <tr v-for="question in questionList" :key="question.id">
+          <td>{{ question.id }}</td>
           <td>
-            <router-link :to="'/detail/' + index">{{ question.subject }}</router-link>
+            <router-link :to="'/detail/' + question.id">{{ question.title }}</router-link>
           </td>
           <td>{{ question.create_date }}</td>
         </tr>
@@ -38,12 +38,10 @@ export default {
   },
   methods: {
     getQuestionList() {
-      fastapi("get", "/api/question/list", {}, (json) => {
+      fastapi("get", "/api/question/list"
+          , {}, (json) => {
         this.questionList = json;
       });
-    },
-    stringifyId(id) {
-      return String(id); // ObjectId를 문자열로 변환
     },
   },
 };

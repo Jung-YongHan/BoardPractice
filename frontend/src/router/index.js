@@ -10,7 +10,7 @@ const routes = [
     component: PageHome
   },
   {
-    path: '/detail/:index',
+    path: '/detail/:question_id',
     name: 'PageDetail',
     component: PageDetail,
     props: true
